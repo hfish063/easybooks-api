@@ -13,12 +13,10 @@ class GoodReads():
 
             rows = self.select_table_data(soup)
 
-            for row in rows:
-                cols = row.find_all("td")
-                
-                for col in cols:
-                    title = col.find("span", itemprop="name")
-                    author = col.find("span", itemprop="author")
+            if rows is not None:
+                for row in rows:
+                    title = row.find("span", itemprop="name")
+                    author = row.find("span", itemprop="author")
 
                     if title and author:
                         title_str = title.text
@@ -47,7 +45,8 @@ class GoodReads():
     def select_table_data(self, soup):
             table = soup.find("table", attrs={"class": "tableList"})
 
-            return table.find_all("tr")
+            if table is not None:
+                return table.find_all("tr")
     
 class ListItem():
     def __init__(self, title, author):
