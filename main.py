@@ -9,9 +9,9 @@ def run():
     gr = GoodReads()
     
     while True:
-        print("0: terminate program, 1: scan result list")
+        print("0: terminate program, 1: scan result list, 2: find item key")
 
-        user_input = input("Enter number (0-1): ")
+        user_input = input("Enter number (0-2): ")
 
         if user_input == "0":
             break
@@ -22,6 +22,12 @@ def run():
 
             for result in results:
                 print("Title: {title} Author(s): {author}".format(title=result.title, author=result.author))
+        elif user_input == "2":
+            book_title = input("Enter book title: ")
+
+            id = gr.find_item_id(book_title)
+
+            print(id)
 
 if __name__ == "__main__":
     run()

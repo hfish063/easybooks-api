@@ -38,7 +38,15 @@ class GoodReads():
         if data.status_code == 200:
             soup = BeautifulSoup(data.content, "html5lib")
 
-            first_row = self.select_table_data(soup)[0]          
+            try:
+                first_row = self.select_table_data(soup)[0]
+            except:
+                # important: return empty id String if there are not any search results
+                return id
+
+            if first_row is not None:
+                heading = first_row.find("a", itemprop="url")
+                id = heading.get("href")
 
         return id
     
