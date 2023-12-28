@@ -15,21 +15,26 @@ Root endpoint is *http://localhost:8000*, FastAPI defaults to 8000(port) unless 
   ```json
   [
     {
-        "title": "Spice & Wolf, Vol. 01",
-        "author": "Isuna Hasekura"
-    },
-    {
-        "title": "Spice & Wolf, Vol. 1 (Spice & Wolf: Manga, #1)",
-        "author": "Isuna Hasekura"
-    },
-    {
-        "title": "Spice & Wolf, Vol. 02",
-        "author": "Isuna Hasekura"
-    },
-    {
-        "title": "Spice & Wolf, Vol. 03",
-        "author": "Isuna Hasekura"
+      "results_length": 4
     }
+    [
+      {
+          "title": "Spice & Wolf, Vol. 01",
+          "author": "Isuna Hasekura"
+      },
+      {
+          "title": "Spice & Wolf, Vol. 1 (Spice & Wolf: Manga, #1)",
+          "author": "Isuna Hasekura"
+      },
+      {
+          "title": "Spice & Wolf, Vol. 02",
+          "author": "Isuna Hasekura"
+      },
+      {
+          "title": "Spice & Wolf, Vol. 03",
+          "author": "Isuna Hasekura"
+      }
+    ]
   ]
   ```
 2. `/details/{book_title}`
