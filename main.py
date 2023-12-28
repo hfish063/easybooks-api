@@ -3,36 +3,44 @@ Main module for goodreads api/webscraper project
 author: haydenfish
 """
 
+from fastapi import FastAPI, HTTPException, Request
+from slowapi.util import get_remote_address
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+import uvicorn
+import slowapi
+
 from goodreads import GoodReads
 
+app = FastAPI()
+gr = GoodReads()
+limiter = slowapi.Limiter(key_func=get_remote_address)
+
 def run():
-    gr = GoodReads()
+    app.state.limiter = limiter
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+    uvicorn.run("main:app", reload=True)
+
+@app.get("/search/{book_title}")
+@limiter.limit("10/minute")
+async def search(request: Request, book_title):
+    results = gr.scan_result_list(book_title)
+
+    if len(results) < 1:
+        raise HTTPException(status_code=404, detail="Could not locate book with title - " + book_title)
     
-    while True:
-        print("0: terminate program, 1: scan result list, 2: scan result item")
+    return results
 
-        user_input = input("Enter number (0-2): ")
+@app.get("/details/{book_title}")
+@limiter.limit("10/minute")
+async def search(request: Request, book_title):
+    result = gr.scan_result_item(book_title)
 
-        if user_input == "0":
-            break
-        elif user_input == "1":
-            book_title = input("Enter book title: ")
-
-            results = gr.scan_result_list(book_title)
-
-            for result in results:
-                print("Title: {title}\nAuthor(s): {author}\n".format(title=result.title, author=result.author))
-        elif user_input == "2":
-            book_title = input("Enter book title: ")
-            
-            result = gr.scan_result_item(book_title)
-
-            if result is not None:
-                print(result.title + "\n")
-                print(result.author + "\n")
-                print(result.description + "\n")
-        else:
-            print("Invalid input - please try again\n")
+    if result is None:
+        raise HTTPException(status_code=404, detail="Could not locate book with title - " + book_title)
+    
+    return result
 
 if __name__ == "__main__":
     run()
