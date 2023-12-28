@@ -11,7 +11,7 @@ Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](ht
 2. `scan_result_item`
 
 ## Installation
-Simply clone this repository onto your local machine
+Simply clone this repository onto your local machine, then locate and run the **main.py** file
 
 **NOTE:** In order to run the application you will need the following:
 
