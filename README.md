@@ -1,7 +1,7 @@
 ![banner](images/project-banner.png)
 
 # About
-Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](https://www.goodreads.com/?ref=nav_hom) website to obtain details about various book titles
+Easybooks api utilizes a BeautifulSoup webscraper that parses the [goodreads](https://www.goodreads.com/?ref=nav_hom) website to obtain details about various book titles
 
 **Rate-limiting** is enabled by default, set at 10 requests per minute
 
