@@ -62,4 +62,3 @@ Simply clone this repository onto your local machine, then locate and run the **
 - To **install** the dependecies, navigate to project directory and run the following command:
   `pip3 install -r requirements.txt`
   - For **Windows** users the command might be: `pip install -r requirements.txt`
-- Additionally, if you do not have an html parser for bs4 to use, run `pip3 install html5lib`
