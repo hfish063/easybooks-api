@@ -1,4 +1,6 @@
-# goodreads-api
+![banner](images/banner.png)
+
+# About
 Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](https://www.goodreads.com/?ref=nav_hom) website to obtain details about various book titles
 
 **Work in progress, additional featurs are planned**
