@@ -2,10 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 
 class GoodReads():
-    URL = "https://www.goodreads.com/search"
+    SEARCH_URL = "https://www.goodreads.com/search"
+    ITEM_URL = "https://www.goodreads.com"
 
     def scan_result_list(self, book_title):
-        data = requests.get(self.URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
         results = []
 
         if data.status_code == 200:
@@ -16,7 +17,9 @@ class GoodReads():
             if rows is not None:
                 for row in rows:
                     title = row.find("span", itemprop="name")
-                    author = row.find("span", itemprop="author")
+
+                    heading = row.find("span", itemprop="author")
+                    author = heading.find("span", itemprop="name")
 
                     if title and author:
                         title_str = title.text
@@ -26,12 +29,24 @@ class GoodReads():
         
         return results
     
-    def scan_result_item(self):
-        return
+    # TODO: find cover image url
+    def scan_result_item(self, book_title):
+        item_id = self.find_item_id(book_title)
+
+        if self.is_valid_id(item_id):
+            data = requests.get(self.ITEM_URL + item_id)
+
+            if data.status_code == 200:
+                soup  = BeautifulSoup(data.content, "html5lib")
+
+                title = soup.find("h1", attrs={"class": "Text Text__title1"}).text
+                author = soup.find("span", attrs={"class": "ContributorLink__name"}).text
+                description = soup.find("span", attrs={"class": "Formatted"}).text
+
+                return ItemDetails(title, author, description)
     
-    # TODO: method implmentation
     def find_item_id(self, book_title):
-        data = requests.get(self.URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
 
         id = ""
 
@@ -55,6 +70,9 @@ class GoodReads():
 
             if table is not None:
                 return table.find_all("tr")
+            
+    def is_valid_id(self, item_id):
+        return len(item_id) > 0
     
 class ListItem():
     def __init__(self, title, author):
