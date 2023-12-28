@@ -8,7 +8,9 @@ Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](ht
 **Work in progress, additional featurs are planned**
 
 ## User guide
-Root endpoint is *http://localhost:8000*, FastAPI defaults to 8000(port) unless specified otherwise
+The api is deployed using Render's FastAPI services, however rates are limited and requests might be slow.  For best performance I would recommend following the **installation** directions and running this program on your personal machine
+
+Root endpoint is *https://goodreads-api.onrender.com*
 
 ### Current requests
 1. `/search/{book_title}`
