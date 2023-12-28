@@ -6,6 +6,8 @@ Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](ht
 **Work in progress, additional featurs are planned**
 
 ## User guide
+Root endpoint is *http://localhost:8000*, FastAPI defaults to 8000(port) unless specified otherwise
+
 ### Current requests
 1. `/search/{book_title}`
   ```json
