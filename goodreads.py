@@ -42,8 +42,10 @@ class GoodReads():
                 title = soup.find("h1", attrs={"class": "Text Text__title1"}).text
                 author = soup.find("span", attrs={"class": "ContributorLink__name"}).text
                 description = soup.find("span", attrs={"class": "Formatted"}).text
+                
+                image_url = self.find_cover_image(soup)
 
-                return ItemDetails(title, author, description)
+                return ItemDetails(title, author, description, image_url)
     
     def find_item_id(self, book_title):
         data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
@@ -74,13 +76,20 @@ class GoodReads():
     def is_valid_id(self, item_id):
         return len(item_id) > 0
     
+    
+    def find_cover_image(self, soup):
+        image_div = soup.find("div", attrs={"class": "BookCover__image"})
+
+        return image_div.find("img")["src"]
+    
 class ListItem():
     def __init__(self, title, author):
         self.title = title
         self.author = author
 
 class ItemDetails():
-    def __init__(self, title, author, description):
+    def __init__(self, title, author, description, image_url):
         self.title = title
         self.author = author
         self.description = description
+        self.image_url = image_url
