@@ -46,3 +46,6 @@ Simply clone this repository onto your local machine, then locate and run the **
 
 ### Dependencies
 - For list of dependencies see the **requirements.txt** file located in the project repository
+- To **install** the dependecies, navigate to project directory and run the following command:
+  `pip3 install -r requirements.txt`
+  - For **Windows** users the command might be: `pip isntall -r requirements.txt`
