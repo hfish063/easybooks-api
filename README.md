@@ -16,7 +16,7 @@ Root endpoint is *http://localhost:8000*, FastAPI defaults to 8000(port) unless 
   [
     {
       "results_length": 4
-    }
+    },
     [
       {
           "title": "Spice & Wolf, Vol. 01",
