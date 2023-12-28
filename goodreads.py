@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import html5lib
 
 class GoodReads():
     SEARCH_URL = "https://www.goodreads.com/search"
