@@ -10,6 +10,8 @@ Goodreads api utilizes a BeautifulSoup webscraper that parses the [goodreads](ht
 ## User guide
 The api is deployed using Render's FastAPI services, however rates are limited and requests might be slow.  For best performance I would recommend following the **installation** directions and running this program on your personal machine
 
+[![icon](images/render-icon.png)](https://goodreads-api.onrender.com)
+
 Root endpoint is *https://goodreads-api.onrender.com*
 
 ### Current requests
