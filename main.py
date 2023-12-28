@@ -5,7 +5,7 @@ author: haydenfish
 
 from fastapi import FastAPI, HTTPException, Request
 from slowapi.util import get_remote_address
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 import uvicorn
 import slowapi
@@ -30,7 +30,7 @@ async def search(request: Request, book_title):
     if len(results) < 1:
         raise HTTPException(status_code=404, detail="Could not locate book with title - " + book_title)
     
-    return results
+    return {"results_length": len(results)}, results
 
 @app.get("/details/{book_title}")
 @limiter.limit("10/minute")
