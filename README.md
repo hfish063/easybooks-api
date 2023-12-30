@@ -50,7 +50,13 @@ Root endpoint is *https://goodreads-api.onrender.com*
     "image_url": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1388155863i/7805.jpg"
   }
   ```
-3. *Additional endpoints are planned for the future...*
+3. `/quotes/random/{book_title}`
+```json
+{
+    "quote": "“And blood-black nothingness began to spin. A system of cells interlinked, within cells interlinked, within cells interlinked within one stem. And dreadfully distinct against the dark, a tall white fountain played.” ― Vladimir     Nabokov, Pale Fire"
+}
+```
+5. *Additional endpoints are planned for the future...*
 
 ## Installation
 Simply clone this repository onto your local machine, then locate and run the **main.py** file
