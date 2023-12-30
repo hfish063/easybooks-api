@@ -1,7 +1,9 @@
 ![banner](images/project-banner.png)
 
 # About
-Easybooks api utilizes a BeautifulSoup webscraper that parses the [goodreads](https://www.goodreads.com/?ref=nav_hom) website to obtain details about various book titles
+Easybooks-api utilizes a BeautifulSoup webscraper that parses the [goodreads](https://www.goodreads.com/?ref=nav_hom) website to obtain details about various book titles
+
+I decided to start development on this project because I needed a straightforward alternative to the *OpenLibraryAPI*, with only a minimal set of features due to an issue I encountered with foreign languages in the former Api responses
 
 **Rate-limiting** is enabled by default, set at 10 requests per minute
 
