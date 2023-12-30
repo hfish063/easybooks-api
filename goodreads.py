@@ -49,7 +49,7 @@ class GoodReads():
 
                 return ItemDetails(title, author, description, image_url)
 
-    # TODO: method implementation     
+    # TODO: handle Internal Server Error    
     def find_random_quote(self, book_title):
         data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
 
@@ -67,10 +67,8 @@ class GoodReads():
 
                 quotes.append(Quote(quote_s))
 
-        # stub return value
-        return random.choice(quotes)
-
-        # return random.choice(data)
+        if len(quotes) > 0:
+            return random.choice(quotes)
     
     def find_item_id(self, book_title):
         data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
