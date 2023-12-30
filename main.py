@@ -42,7 +42,7 @@ async def search(request: Request, book_title):
     
     return result
 
-@app.get("/quotes/{book_title}")
+@app.get("/quotes/random/{book_title}")
 @limiter.limit("10/minute")
 async def quotes(request: Request, book_title):
     quote = gr.find_random_quote(book_title)
