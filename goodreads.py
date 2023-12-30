@@ -1,3 +1,4 @@
+import random
 from bs4 import BeautifulSoup
 import requests
 import html5lib
@@ -5,6 +6,7 @@ import html5lib
 class GoodReads():
     SEARCH_URL = "https://www.goodreads.com/search"
     ITEM_URL = "https://www.goodreads.com"
+    QUOTES_URL = "https://www.goodreads.com/quotes/search"
 
     def scan_result_list(self, book_title):
         data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
@@ -30,7 +32,6 @@ class GoodReads():
         
         return results
     
-    # TODO: find cover image url
     def scan_result_item(self, book_title):
         item_id = self.find_item_id(book_title)
 
@@ -47,6 +48,29 @@ class GoodReads():
                 image_url = self.find_cover_image(soup)
 
                 return ItemDetails(title, author, description, image_url)
+
+    # TODO: method implementation     
+    def find_random_quote(self, book_title):
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
+
+        quotes = []
+
+        if data.status_code == 200:
+            soup = BeautifulSoup(data.content, "html5lib")
+
+            quotes_html = soup.find_all("div", attrs={"class": "quoteText"})
+
+            for quote in quotes_html:
+                # important: format quote by removing newline characters and extra whitespace
+                quote_s = quote.text.strip()
+                quote_s = " ".join(quote_s.split())
+
+                quotes.append(Quote(quote_s))
+
+        # stub return value
+        return random.choice(quotes)
+
+        # return random.choice(data)
     
     def find_item_id(self, book_title):
         data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
@@ -94,3 +118,7 @@ class ItemDetails():
         self.author = author
         self.description = description
         self.image_url = image_url
+
+class Quote():
+    def __init__(self, quote):
+        self.quote = quote

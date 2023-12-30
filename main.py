@@ -42,5 +42,15 @@ async def search(request: Request, book_title):
     
     return result
 
+@app.get("/quotes/{book_title}")
+@limiter.limit("10/minute")
+async def quotes(request: Request, book_title):
+    quote = gr.find_random_quote(book_title)
+
+    if quote is None:
+        raise HTTPException(status_code=404, detail="Could not find any quotes for book title - " + book_title)
+    
+    return quote
+
 if __name__ == "__main__":
     run()
