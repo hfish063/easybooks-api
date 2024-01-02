@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests
 import html5lib
 
+from models.book import ItemDetails, ListItem, Quote
+
 # TODO: we could apply some DRY principles here
 class GoodReads():
     SEARCH_URL = "https://www.goodreads.com/search"
@@ -117,19 +119,3 @@ class GoodReads():
         quote_s.replace("’", "'")
 
         return quote_s
-    
-class ListItem():
-    def __init__(self, title, author):
-        self.title = title
-        self.author = author
-
-class ItemDetails():
-    def __init__(self, title, author, description, image_url):
-        self.title = title
-        self.author = author
-        self.description = description
-        self.image_url = image_url
-
-class Quote():
-    def __init__(self, quote):
-        self.quote = quote
