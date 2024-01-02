@@ -58,6 +58,25 @@ Root endpoint is *https://goodreads-api.onrender.com*
     "quote": "“And blood-black nothingness began to spin. A system of cells interlinked, within cells interlinked, within cells interlinked within one stem. And dreadfully distinct against the dark, a tall white fountain played.” ― Vladimir     Nabokov, Pale Fire"
 }
 ```
+4. `/quotes/all/{book_title}`
+```json
+[
+    {
+        "results_length": 20
+    },
+    [
+        {
+            "quote": "“There's no one thing that's true. It's all true.” ― Ernest Hemingway, For Whom the Bell Tolls"
+        },
+        {
+            "quote": "“No man is an island, entire of itself; every man is a piece of the continent, a part of the main. If a clod be washed away by the sea, Europe is the less, as well as if a promontory were, as well as if a manor of thy friend's or of thine own were: any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee.” ― John Donne, No man is an island â€“ A selection from the prose"
+        },
+        {
+            "quote": "“There is nothing else than now. There is neither yesterday, certainly, nor is there any tomorrow. How old must you be before you know that? There is only now, and if now is only two days, then two days is your life and everything in it will be in proportion. This is how you live a life in two days. And if you stop complaining and asking for what you never will get, you will have a good life. A good life is not measured by any biblical span.” ― Ernest Hemingway, For Whom the Bell Tolls"
+        }
+    ]
+]
+```
 5. *Additional endpoints are planned for the future...*
 
 ## Installation
