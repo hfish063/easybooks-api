@@ -12,6 +12,8 @@ import slowapi
 
 from goodreads import GoodReads
 
+# TODO: utils module
+
 app = FastAPI()
 gr = GoodReads()
 limiter = slowapi.Limiter(key_func=get_remote_address)
@@ -44,13 +46,23 @@ async def search(request: Request, book_title):
 
 @app.get("/quotes/random/{book_title}")
 @limiter.limit("10/minute")
-async def quotes(request: Request, book_title):
+async def random_quote(request: Request, book_title):
     quote = gr.find_random_quote(book_title)
 
     if quote is None:
         raise HTTPException(status_code=404, detail="Could not find any quotes for book title - " + book_title)
     
     return quote
+
+@app.get("/quotes/all/{book_title}")
+@limiter.limit("10/minute")
+async def quotes(request: Request, book_title):
+    quotes = gr.find_all_quotes(book_title)
+
+    if len(quotes) < 1:
+        raise HTTPException(status_code=404, detail="Could not find any quotes for book title - " + book_title)
+    
+    return {"results_length": len(quotes)}, quotes
 
 if __name__ == "__main__":
     run()

@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import html5lib
 
+# TODO: we could apply some DRY principles here
 class GoodReads():
     SEARCH_URL = "https://www.goodreads.com/search"
     ITEM_URL = "https://www.goodreads.com"
@@ -49,8 +50,15 @@ class GoodReads():
 
                 return ItemDetails(title, author, description, image_url)
 
-    # TODO: handle Internal Server Error    
     def find_random_quote(self, book_title):
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
+
+        quotes = self.find_all_quotes(book_title)
+
+        if len(quotes) > 0:
+            return random.choice(quotes)
+        
+    def find_all_quotes(self, book_title):
         data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
 
         quotes = []
@@ -61,14 +69,11 @@ class GoodReads():
             quotes_html = soup.find_all("div", attrs={"class": "quoteText"})
 
             for quote in quotes_html:
-                # important: format quote by removing newline characters and extra whitespace
-                quote_s = quote.text.strip()
-                quote_s = " ".join(quote_s.split())
+                quote_s = self.format_quote(quote)
 
                 quotes.append(Quote(quote_s))
 
-        if len(quotes) > 0:
-            return random.choice(quotes)
+        return quotes
     
     def find_item_id(self, book_title):
         data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
@@ -104,6 +109,14 @@ class GoodReads():
         image_div = soup.find("div", attrs={"class": "BookCover__image"})
 
         return image_div.find("img")["src"]
+    
+    def format_quote(self, quote):
+        # important: format quote by removing newline characters and extra whitespace
+        quote_s = quote.text.strip()
+        quote_s = " ".join(quote_s.split())
+        quote_s.replace("’", "'")
+
+        return quote_s
     
 class ListItem():
     def __init__(self, title, author):
