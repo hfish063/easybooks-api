@@ -118,4 +118,7 @@ class GoodReads():
         quote_s = " ".join(quote_s.split())
         quote_s.replace("’", "'")
 
+        # String replacement not taking effect
+        # quote_s.replace("“", "")
+
         return quote_s
