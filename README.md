@@ -78,6 +78,7 @@ Root endpoint is *https://goodreads-api.onrender.com*
 ]
 ```
 5. *Additional endpoints are planned for the future...*
+   - Recommendation algorithm for finding book based on previously read genres is being worked on
 
 ## Installation
 Simply clone this repository onto your local machine, then locate and run the **main.py** file
