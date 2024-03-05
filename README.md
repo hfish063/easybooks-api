@@ -7,7 +7,7 @@ I decided to start development on this project because I needed a straightforwar
 
 **Rate-limiting** is enabled by default, set at 10 requests per minute
 
-**Work in progress, additional featurs are planned**
+**Work in progress, additional features are planned**
 
 ## User guide
 The api is deployed using Render's FastAPI services, however rates are limited and requests might be slow.  For best performance I would recommend following the **installation** directions and running this program on your personal machine
