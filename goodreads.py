@@ -4,6 +4,7 @@ import requests
 import html5lib
 
 from models.book import ItemDetails, ListItem, Quote
+from util.genre import Genre
 
 # TODO: we could apply some DRY principles here
 class GoodReads():
@@ -12,7 +13,7 @@ class GoodReads():
     QUOTES_URL = "https://www.goodreads.com/quotes/search"
 
     def scan_result_list(self, book_title):
-        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
         results = []
 
         if data.status_code == 200:
@@ -39,7 +40,7 @@ class GoodReads():
         item_id = self.find_item_id(book_title)
 
         if self.is_valid_id(item_id):
-            data = requests.get(self.ITEM_URL + item_id)
+            data = requests.get(self.ITEM_URL + item_id, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
 
             if data.status_code == 200:
                 soup  = BeautifulSoup(data.content, "html5lib")
@@ -50,10 +51,13 @@ class GoodReads():
                 
                 image_url = self.find_cover_image(soup)
 
-                return ItemDetails(title, author, description, image_url)
+                # TODO: find link to book page on goodreads when searching for specific title
+                resource_url = None
+
+                return ItemDetails(title, author, description, image_url, resource_url)
 
     def find_random_quote(self, book_title):
-        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
 
         quotes = self.find_all_quotes(book_title)
 
@@ -61,9 +65,11 @@ class GoodReads():
             return random.choice(quotes)
         
     def find_all_quotes(self, book_title):
-        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"})
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
 
         quotes = []
+
+        print(data.status_code)
 
         if data.status_code == 200:
             soup = BeautifulSoup(data.content, "html5lib")
@@ -77,8 +83,18 @@ class GoodReads():
 
         return quotes
     
+    def find_recommended_book(self, book_list: list):
+        # naive implementation to a recommendation algorithm - recommend book based on the common genre of given list
+        genre_dict = {}
+
+        return [e.value for e in Genre]
+    
+    # TODO: implement method to find the genres of specific title
+    def find_genre(self, book_title):
+        return
+    
     def find_item_id(self, book_title):
-        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
 
         id = ""
 
