@@ -4,7 +4,7 @@ import requests
 import html5lib
 
 from models.book import ItemDetails, ListItem, Quote
-from util.genre import Genre
+from util.useragent import get_user_agent
 
 # TODO: we could apply some DRY principles here
 class GoodReads():
@@ -13,7 +13,7 @@ class GoodReads():
     QUOTES_URL = "https://www.goodreads.com/quotes/search"
 
     def scan_result_list(self, book_title):
-        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers=get_user_agent())
         results = []
 
         if data.status_code == 200:
@@ -40,7 +40,7 @@ class GoodReads():
         item_id = self.find_item_id(book_title)
 
         if self.is_valid_id(item_id):
-            data = requests.get(self.ITEM_URL + item_id, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
+            data = requests.get(self.ITEM_URL + item_id, headers=get_user_agent())
 
             if data.status_code == 200:
                 soup  = BeautifulSoup(data.content, "html5lib")
@@ -57,7 +57,7 @@ class GoodReads():
                 return ItemDetails(title, author, description, image_url, resource_url)
 
     def find_random_quote(self, book_title):
-        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers=get_user_agent())
 
         quotes = self.find_all_quotes(book_title)
 
@@ -65,7 +65,7 @@ class GoodReads():
             return random.choice(quotes)
         
     def find_all_quotes(self, book_title):
-        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
+        data = requests.get(self.QUOTES_URL, params={"utf8": "✓", "q": book_title, "commit": "Search"}, headers=get_user_agent())
 
         quotes = []
 
@@ -94,7 +94,7 @@ class GoodReads():
         return
     
     def find_item_id(self, book_title):
-        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers={'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'})
+        data = requests.get(self.SEARCH_URL, params={"utf8": "✓", "q": book_title, "search_type": "books"}, headers=get_user_agent())
 
         id = ""
 
