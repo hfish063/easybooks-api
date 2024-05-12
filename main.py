@@ -12,8 +12,6 @@ import slowapi
 
 from goodreads import GoodReads
 
-# TODO: utils module
-
 app = FastAPI()
 gr = GoodReads()
 limiter = slowapi.Limiter(key_func=get_remote_address)
